@@ -149,8 +149,14 @@ fi
 # UPDATE: post-brews install tasks
 ###############################################################################
 
-chapter "Running post-zsh install steps..."
+chapter "Running post-brews install tasks..."
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
+append_to_zshrc 'source $(brew --prefix antigen)/share/antigen/antigen.zsh'
+append_to_zshrc 'antigen use oh-my-zsh'
+append_to_zshrc 'antigen bundle heroku'
+append_to_zshrc 'antigen bundle z'
+append_to_zshrc 'antigen theme robbyrussell'
+append_to_zshrc 'antigen apply'
 
 HOMEBREW_PREFIX="/usr/local"
 
@@ -176,7 +182,9 @@ case "$SHELL" in
 esac
 
 append_to_zshrc '$(brew --prefix asdf)/asdf.sh'
+chmod 755 $(brew --prefix asdf)/asdf.sh
 append_to_zshrc '$(brew --prefix asdf)/etc/bash_completion.d/asdf.bash'
+chmod 755 $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
 
 ###############################################################################
 # UPDATE: Homebrew
@@ -198,11 +206,11 @@ fi
 ###############################################################################
 # UPDATE: post-casks install tasks
 ###############################################################################
-
-curl https://github.com/Hammerspoon/Spoons/raw/master/Spoons/ReloadConfiguration.spoon.zip > ReloadConfiguration.spoon.zip && \
-unzip ReloadConfiguration.spoon.zip && \
-rm ReloadConfiguration.spoon.zip && \
-ReloadConfiguration.spoon
+# chapter "Running post-casks install tasks..."
+# curl https://github.com/Hammerspoon/Spoons/raw/master/Spoons/ReloadConfiguration.spoon.zip > ReloadConfiguration.spoon.zip && \
+# unzip ReloadConfiguration.spoon.zip && \
+# rm ReloadConfiguration.spoon.zip && \
+# ReloadConfiguration.spoon
 
 ###############################################################################
 # INSTALL: Mac App Store Apps
@@ -245,6 +253,7 @@ brew cleanup 2> /dev/null
 # OPTIONAL: Customizations
 ###############################################################################
 chapter "Adding hot sauce…"
+cp ./.hot-sauce $HOME/.hot-sauce
 if [ -f "$HOME/.hot-sauce" ]; then
 	if ask "Do you want to add hot sauce?" Y; then
 		. "$HOME/.hot-sauce"; printf "\n  You got hot sauce in your bag. 🔥 ${bold}Swag.${normal}\n";
