@@ -674,3 +674,15 @@ append_to_zshrc() {
     fi
   fi
 }
+
+update_shell() {
+  local shell_path;
+  shell_path="$(command -v zsh)"
+
+  printf "Changing your shell to zsh ..."
+  if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+    printf "Adding '$shell_path' to /etc/shells"
+    sudo sh -c "echo $shell_path >> /etc/shells"
+  fi
+  sudo chsh -s "$shell_path" "$USER"
+}

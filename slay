@@ -149,8 +149,35 @@ fi
 # UPDATE: post-zsh installation
 ###############################################################################
 
-append_to_zshrc '$HOME/.asdf/asdf.sh'
-append_to_zshrc '$HOME/.asdf/completions/asdf.bash'
+chapter "Running post-zsh install steps..."
+append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
+
+HOMEBREW_PREFIX="/usr/local"
+
+if [ -d "$HOMEBREW_PREFIX" ]; then
+  if ! [ -r "$HOMEBREW_PREFIX" ]; then
+    sudo chown -R "$LOGNAME:admin" /usr/local
+  fi
+else
+  sudo mkdir "$HOMEBREW_PREFIX"
+  sudo chflags norestricted "$HOMEBREW_PREFIX"
+  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
+fi
+
+case "$SHELL" in
+  */zsh)
+    if [ "$(command -v zsh)" != '/usr/local/bin/zsh' ] ; then
+      update_shell
+    fi
+    ;;
+  *)
+    update_shell
+    ;;
+esac
+
+append_to_zshrc "autoload -Uz compinit && compinit"
+append_to_zshrc '$(brew --prefix asdf)/asdf.sh'
+append_to_zshrc '$(brew --prefix asdf)/etc/bash_completion.d/asdf.bash'
 
 ###############################################################################
 # UPDATE: Homebrew
