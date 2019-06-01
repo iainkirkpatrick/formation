@@ -146,7 +146,7 @@ if [ -e $cwd/swag/brews ]; then
 fi
 
 ###############################################################################
-# UPDATE: post-zsh installation
+# UPDATE: post-brews install tasks
 ###############################################################################
 
 chapter "Running post-zsh install steps..."
@@ -175,7 +175,6 @@ case "$SHELL" in
     ;;
 esac
 
-append_to_zshrc "autoload -Uz compinit && compinit"
 append_to_zshrc '$(brew --prefix asdf)/asdf.sh'
 append_to_zshrc '$(brew --prefix asdf)/etc/bash_completion.d/asdf.bash'
 
@@ -195,6 +194,15 @@ if [ -e $cwd/swag/casks ]; then
 	    install_application_via_brew $cask
 	done
 fi
+
+###############################################################################
+# UPDATE: post-casks install tasks
+###############################################################################
+
+curl https://github.com/Hammerspoon/Spoons/raw/master/Spoons/ReloadConfiguration.spoon.zip > ReloadConfiguration.spoon.zip && \
+unzip ReloadConfiguration.spoon.zip && \
+rm ReloadConfiguration.spoon.zip && \
+ReloadConfiguration.spoon
 
 ###############################################################################
 # INSTALL: Mac App Store Apps

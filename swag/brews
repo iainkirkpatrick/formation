@@ -1,5 +1,6 @@
 zsh
 zsh-completions
+antigen
 asdf
 git
 mas
