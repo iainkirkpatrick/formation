@@ -90,31 +90,31 @@ fi
 # -----------------------------------------------------------------------------
 # Bash-it
 # -----------------------------------------------------------------------------
-if [ -d "$HOME/.bash_it" ]; then
-	print_success_muted "Bash-it already installed. Skipping."
-else
-	step "Installing Bash-it…"
-	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
-	~/.bash_it/install.sh --silent --no-modify-config
-	print_success "Bash-it installed!"
-fi
+# if [ -d "$HOME/.bash_it" ]; then
+# 	print_success_muted "Bash-it already installed. Skipping."
+# else
+# 	step "Installing Bash-it…"
+# 	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
+# 	~/.bash_it/install.sh --silent --no-modify-config
+# 	print_success "Bash-it installed!"
+# fi
 
 # -----------------------------------------------------------------------------
 # NVM
 # -----------------------------------------------------------------------------
-if [ -x nvm ]; then
-	step "Installing NVM…"
-	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-	print_success "NVM installed!"
-	step "Installing latest Node…"
-	nvm install node
-	nvm use node
-	nvm run node --version
-	nodev=$(node -v)
-	print_success "Using Node $nodev!"
-else
-	print_success_muted "NVM/Node already installed. Skipping."
-fi
+# if [ -x nvm ]; then
+# 	step "Installing NVM…"
+# 	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+# 	print_success "NVM installed!"
+# 	step "Installing latest Node…"
+# 	nvm install node
+# 	nvm use node
+# 	nvm run node --version
+# 	nodev=$(node -v)
+# 	print_success "Using Node $nodev!"
+# else
+# 	print_success_muted "NVM/Node already installed. Skipping."
+# fi
 
 # -----------------------------------------------------------------------------
 # Homebrew
@@ -144,6 +144,13 @@ if [ -e $cwd/swag/brews ]; then
 		install_brews $brew
 	done
 fi
+
+###############################################################################
+# UPDATE: post-zsh installation
+###############################################################################
+
+append_to_zshrc '$HOME/.asdf/asdf.sh'
+append_to_zshrc '$HOME/.asdf/completions/asdf.bash'
 
 ###############################################################################
 # UPDATE: Homebrew
@@ -197,16 +204,7 @@ brew cleanup 2> /dev/null
 ###############################################################################
 # INSTALL: npm packages
 ###############################################################################
-if [ -e $cwd/swag/npm ]; then
-	chapter "Installing npm packages…"
-
-	for pkg in $(<$cwd/swag/npm); do
-		KEY="${pkg%%::*}"
-		VALUE="${pkg##*::}"
-		install_npm_packages $KEY $VALUE
-	done
-fi
-
+# N.B. I'm not into using global node modules if possible... check the original repo https://github.com/minamarkham/formation for use of install_npm_packages
 
 ###############################################################################
 # OPTIONAL: Customizations
