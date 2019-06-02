@@ -180,10 +180,10 @@ case "$SHELL" in
     update_shell
     ;;
 esac
-
-append_to_zshrc '$(brew --prefix asdf)/asdf.sh'
+append_to_zshrc 'autoload -Uz compinit && compinit'
+append_to_zshrc '. $(brew --prefix asdf)/asdf.sh'
 chmod 755 $(brew --prefix asdf)/asdf.sh
-append_to_zshrc '$(brew --prefix asdf)/etc/bash_completion.d/asdf.bash'
+append_to_zshrc '. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash'
 chmod 755 $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
 
 ###############################################################################
