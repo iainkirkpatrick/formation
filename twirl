@@ -675,6 +675,21 @@ append_to_zshrc() {
   fi
 }
 
+append_to_vimrc() {
+  local text="$1" vimrc
+  local skip_new_line="${2:-0}"
+
+  vimrc="$HOME/.vimrc"
+
+  if ! grep -Fqs "$text" "$vimrc"; then
+    if [ "$skip_new_line" -eq 1 ]; then
+      printf "%s\\n" "$text" >> "$vimrc"
+    else
+      printf "\\n%s\\n" "$text" >> "$vimrc"
+    fi
+  fi
+}
+
 update_shell() {
   local shell_path;
   shell_path="$(command -v zsh)"

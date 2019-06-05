@@ -186,6 +186,19 @@ chmod 755 $(brew --prefix asdf)/asdf.sh
 append_to_zshrc '. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash'
 chmod 755 $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
 
+if [ ! -d "$HOME/.vim/" ]; then
+	mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+	curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+fi
+
+if [ ! "$HOME/.vimrc" ]; then
+	touch "$HOME/.vimrc"
+fi
+
+append_to_vimrc 'execute pathogen#infect()'
+append_to_vimrc 'syntax on'
+append_to_vimrc 'filetype plugin indent on'
+
 ###############################################################################
 # UPDATE: Homebrew
 ###############################################################################

@@ -3,6 +3,7 @@ zsh-completions
 antigen
 asdf
 git
+vim
 mas
 hub
 wifi-password

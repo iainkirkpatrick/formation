@@ -2,3 +2,10 @@
 
 defaults write -g InitialKeyRepeat -int 15 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 2 # normal minimum is 2 (30 ms)
+
+if [ ! -d "~/.vim/bundle/command-t" ]; then
+  git clone https://github.com/wincent/command-t.git ~/.vim/bundle/command-t
+fi
+
+asdf exec ruby ~/.vim/bundle/command-t/ruby/command-t/ext/command-t/extconf.rb
+make -f ~/.vim/bundle/command-t/ruby/command-t/ext/command-t/Makefile
