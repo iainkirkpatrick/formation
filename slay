@@ -212,6 +212,8 @@ fi
 # rm ReloadConfiguration.spoon.zip && \
 # ReloadConfiguration.spoon
 
+append_to_zshrc 'export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH'
+
 ###############################################################################
 # INSTALL: Mac App Store Apps
 ###############################################################################
