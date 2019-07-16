@@ -10,4 +10,4 @@ wifi-password
 gnupg
 fswatch
 ffmpeg
-pipenv
+python
